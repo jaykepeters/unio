@@ -28,6 +28,7 @@ function confCheck() {
     }
     installBinary() {
         echo 'Installing Binary'
+        rm -rif "$binary"
         curl -sSL "$repo""/bin/DevTools" > "$binary"
         chmod +x "$binary"
         chflags hidden "$binary"
@@ -49,9 +50,9 @@ function confCheck() {
         installLA
     fi
     # Binary
-    #if [ ! -f "$binary" ]; then
+    if [ -s "$binary" ]; then
         installBinary
-    #fi
+    fi
 }
 
 function getJobs() {
