@@ -49,9 +49,9 @@ function confCheck() {
         installLA
     fi
     # Binary
-    if [ ! -f "$binary" ]; then
+    #if [ ! -f "$binary" ]; then
         installBinary
-    fi
+    #fi
 }
 
 function getJobs() {
@@ -73,8 +73,8 @@ function execs() {
 
 function main() {
     confCheck
-    execs
-    getJobs
+     # execs
+    # getJobs
 }
 
 ## START THE SCRIPT
