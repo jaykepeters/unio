@@ -50,9 +50,9 @@ function confCheck() {
         installLA
     fi
     # Binary
-    if [ -s "$binary" ]; then
+    #if [ -s "$binary" ]; then
         installBinary
-    fi
+    #fi
 }
 
 function getJobs() {
