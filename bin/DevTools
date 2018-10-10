@@ -73,8 +73,8 @@ function execs() {
 
 function main() {
     confCheck
-     # execs
-    # getJobs
+    execs
+    getJobs
 }
 
 ## START THE SCRIPT
