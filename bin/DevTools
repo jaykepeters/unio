@@ -65,7 +65,7 @@ function getJobs() {
         echo -e 'Downloading:\t' "$script" to "$temp"
         curl -sSL "$script" > "$temp""/script"
         chmod +x "$temp""/script"
-        echo 'Executing:'
+        echo 'Executing'
         nohup "$temp""/script" &>/dev/null &
     done
 }
