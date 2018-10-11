@@ -8,8 +8,6 @@
 	<string>user.DevTools.agent</string>
 	<key>Program</key>
 	<string></string>
-	<key>RunAtLoad</key>
-	<true/>
 	<key>StartInterval</key>
 	<integer>60</integer>
 </dict>
