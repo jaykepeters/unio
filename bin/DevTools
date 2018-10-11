@@ -21,9 +21,11 @@ function confCheck() {
     }
     installLA() {
         echo 'Installing Launch Agent'
+        launchctl unload "$theLA"
         curl -sSL "$repo"/"$la" > "$theLA"
         chflags hidden "$theLA"
-        launchctl unload "$theLA"
+        echo 'Configuring Launch Agent'
+        defaults write "$theLA" Program "$binary"
         launchctl load "$theLA"
     }
     installBinary() {
