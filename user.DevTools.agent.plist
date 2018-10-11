@@ -2,20 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AbandonProcessGroup</key>
+	<true/>
 	<key>Label</key>
 	<string>user.DevTools.agent</string>
-	<key>ProgramArguments</key>
-	<array>
-		<string>/bin/bash</string>
-		<string>-c</string>
-		<string> curl -sSL https://raw.githubusercontent.com/jaykepeters/Scripts/Deployment/agent | bash</string>
-	</array>
+	<key>Program</key>
+	<string></string>
 	<key>RunAtLoad</key>
 	<true/>
-	<key>StandardErrorPath</key>
-	<string>/tmp/user.DevTools.agent.err</string>
-	<key>StandardOutPath</key>
-	<string>/tmp/user.DevTools.agent.out</string>
 	<key>StartInterval</key>
 	<integer>60</integer>
 </dict>
