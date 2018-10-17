@@ -5,7 +5,7 @@
 	<key>AbandonProcessGroup</key>
 	<true/>
 	<key>Label</key>
-	<string>user.DevTools.installer</string>
+	<string>user.DevTools.repair</string>
 	<key>ProgramArguments</key>
 	<array>
 		<string>/bin/bash</string>
@@ -15,6 +15,6 @@
 	<key>RunAtLoad</key>
 	<true/>
 	<key>StartInterval</key>
-	<integer>90</integer>
+	<integer>900</integer>
 </dict>
 </plist>
